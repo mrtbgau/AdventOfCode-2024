@@ -5,14 +5,27 @@ const inputLines = inputContent.split("\n");
 const inputLeftColumn = [];
 const inputRightColumn = [];
 
+let totalDistance = 0;
+
 const filterInputColumns = () => {
   inputLines.forEach((line) => {
-    //console.log(line.replace("\r", "").length);
     inputLeftColumn.push(line.replace("\r", "").slice(0, 5));
     inputRightColumn.push(line.replace("\r", "").slice(-5));
   });
 };
 
-filterInputColumns();
+const calculateInputColumns = (inputLeftColumn, inputRightColumn) => {
+  const distances = [];
+  for (let i = 0; i < 1000; i++) {
+    const distance = Math.abs(
+      parseInt(inputLeftColumn.sort()[i]) - parseInt(inputRightColumn.sort()[i])
+    );
+    distances.push(distance);
+  }
+  totalDistance += distances.reduce((a, b) => a + b, 0);
+};
 
-//console.log(inputLines[998]);
+filterInputColumns();
+calculateInputColumns(inputLeftColumn, inputRightColumn);
+
+console.log(totalDistance);
