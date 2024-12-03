@@ -14,5 +14,22 @@ const filterInputColumns = () => {
   });
 };
 
+const calculateSimilarityScore = (inputLeftColumn, inputRightColumn) => {
+  const scores = [];
+  inputLeftColumn.forEach((leftElement) => {
+    let score = 0;
+    inputRightColumn.forEach((rightElement) => {
+      if (leftElement == rightElement) {
+        score++;
+      }
+    });
+    scores.push(leftElement * score);
+    console.log(`${leftElement} = ${scores}`);
+  });
+  similarityScore += scores.reduce((a, b) => a + b, 0);
+};
+
 filterInputColumns();
+calculateSimilarityScore(inputLeftColumn, inputRightColumn);
+
 console.log(similarityScore);
