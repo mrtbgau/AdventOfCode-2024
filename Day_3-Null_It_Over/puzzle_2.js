@@ -5,9 +5,7 @@ const mul = /mul\((\d{1,3}),(\d{1,3})\)/g;
 const toDo = /do\(\)/g;
 const toDont = /don't\(\)/g;
 
-let multiplications = [];
-
-let allResults = 0;
+let total = 0;
 
 let allMulPositions = [];
 let allDoPositions = [];
@@ -44,24 +42,27 @@ const getAllPositions = () => {
     .sort((a, b) => a.position - b.position);
 };
 
+const calculateTotal = () => {
+  let isEnabled = true;
+
+  for (const instruction of allPositions) {
+    if (instruction.match.match(toDo)) {
+      isEnabled = true;
+    } else if (instruction.match.match(toDont)) {
+      isEnabled = false;
+    } else if (instruction.match.match(mul)) {
+      if (isEnabled) {
+        const [x, y] = instruction.match.match(/\d+/g).map(Number);
+        total += x * y;
+      }
+    }
+  }
+};
+
 getAllMulPositions();
 getAllDoPositions();
 getAllDontPositions();
 getAllPositions();
+calculateTotal();
 
-// const getAllDigitsToMultilply = () => {
-//   const matches = [...inputContent.matchAll(mul)];
-//   multiplications = matches.map((match) => [
-//     parseInt(match[1]),
-//     parseInt(match[2]),
-//   ]);
-// };
-
-// getAllDigitsToMultilply();
-
-// multiplications.forEach((mul) => {
-//   const result = mul.reduce((a, b) => a * b, 1);
-//   allResults += result;
-// });
-
-// console.log(allResults);
+console.log(total);
