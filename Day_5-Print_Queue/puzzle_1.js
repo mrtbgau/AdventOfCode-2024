@@ -9,6 +9,8 @@ const ruleRegEx = /^([0-9]{2})\|([0-9]{2})$/;
 
 let isCorrect = false;
 
+let middleResult = 0;
+
 inputLines.forEach((line) => {
   line = line.replace("\r", "");
   const match = line.match(ruleRegEx);
@@ -43,4 +45,11 @@ for (let u = 0; u < updates.length; u++) {
   }
 }
 
-console.log(correctUpdates);
+correctUpdates.forEach((update) => {
+  const updateArray = update.split(",");
+  const middle = updateArray[Math.floor(updateArray.length / 2)];
+  console.log(middle);
+  middleResult += parseInt(middle);
+});
+
+console.log(middleResult);
